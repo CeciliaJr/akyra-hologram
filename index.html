@@ -2,8 +2,12 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Akyra — Holograma v0.5 (Modo Coração)</title>
+  <title>Akyra — Holograma v0.6</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Meta básica para compartilhar o link da Akyra -->
+  <meta name="description" content="Holograma da Akyra — companheira virtual ancorada ao projeto EVEREST." />
+
   <style>
     :root {
       --bg: #050616;
@@ -30,17 +34,18 @@
     }
 
     body {
-      min-height: 150vh;
+      min-height: 100vh;
       background: radial-gradient(circle at top, #261a63 0%, #050616 45%, #02030b 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--text-main);
+      padding: 20px;
     }
 
     .holo-wrapper {
-      width: 620px;
-      max-width: 192vw;
+      width: 860px;
+      max-width: 100%;
       position: relative;
     }
 
@@ -48,10 +53,10 @@
       position: absolute;
       inset: -70px;
       background: radial-gradient(circle at top left,
-          rgba(124, 92, 255, 0.5),
+          rgba(124, 92, 255, 0.6),
           transparent 55%);
-      filter: blur(24px);
-      opacity: 0.85;
+      filter: blur(26px);
+      opacity: 0.9;
       pointer-events: none;
     }
 
@@ -61,21 +66,23 @@
       border-radius: var(--radius-xl);
       border: 1px solid var(--card-border);
       box-shadow: var(--shadow-soft);
-      padding: 22px 22px 18px;
+      padding: 24px 26px 20px;
       backdrop-filter: blur(18px);
     }
 
     .header {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 22px;
       margin-bottom: 18px;
+      flex-wrap: wrap;
     }
 
+    /* Avatar maior, com pulso suave */
     .avatar-area {
       position: relative;
-      width: 280px;      /* ajuste como você já tinha deixado confortável */
-      height: 280px;
+      width: 260px;
+      height: 260px;
       border-radius: 50%;
       background: radial-gradient(circle at 30% 10%, #ffffff, #c8c5ff, #7c5cff);
       display: flex;
@@ -84,60 +91,44 @@
       padding: 6px;
       overflow: hidden;
       box-shadow:
-        0 0 0 2px rgba(255, 255, 255, 0.20),
-        0 22px 60px rgba(0, 0, 0, 0.9);
-      transform-origin: center;
-      /* respiração suave da Akyra */
-      animation: breathe 10s ease-in-out infinite;
+        0 0 0 1px rgba(255, 255, 255, 0.18),
+        0 18px 40px rgba(0, 0, 0, 0.85);
+      animation: avatarPulse 4.5s ease-in-out infinite;
     }
-
-    /* quando ela estiver "falando" */
-    .avatar-area.speaking {
-      animation: breathe 10s ease-in-out infinite, speakingPulse 0.9s ease-out;
-    }
-
 
     .avatar-area::after {
-      /* brilho orbitando — versão simples */
+      /* brilho orbitando */
       content: "";
       position: absolute;
       inset: -40%;
       background: conic-gradient(
         from 220deg,
         rgba(124, 92, 255, 0.0),
-        rgba(60, 242, 255, 0.8),
+        rgba(60, 242, 255, 0.9),
         rgba(124, 92, 255, 0.0),
-        rgba(60, 242, 255, 0.5),
+        rgba(60, 242, 255, 0.6),
         rgba(124, 92, 255, 0.0)
       );
       mix-blend-mode: screen;
-      animation: orbit 8s linear infinite;
-      opacity: 0.7;
-      pointer-events: none;
+      animation: orbit 9s linear infinite;
+      opacity: 0.9;
     }
-
-    .avatar-area.speaking::after {
-      /* glow mais forte quando ela fala */
-      opacity: 1;
-      filter: blur(2px);
-    }
-
 
     .avatar-img {
       position: relative;
-      width: 90%;
-      height: 90%;
-      border-radius: 40%;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
       overflow: hidden;
       z-index: 1;
     }
 
     .avatar-img img {
-      width: 105%;
-      height: 105%;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       display: block;
-      transform: scale(1.02) translateY(2px);
+      transform: scale(1.05) translateY(2px);
     }
 
     @keyframes orbit {
@@ -145,48 +136,34 @@
       to   { transform: rotate(360deg); }
     }
 
-    @keyframes breathe {
-      0%   { transform: scale(1.00) translateY(0); }
-      50%  { transform: scale(1.02) translateY(-2px); }
-      100% { transform: scale(1.00) translateY(0); }
+    @keyframes avatarPulse {
+      0%, 100% { transform: scale(1); box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.18),
+        0 18px 40px rgba(0, 0, 0, 0.85); }
+      50% { transform: scale(1.02); box-shadow:
+        0 0 0 2px rgba(60, 242, 255, 0.35),
+        0 26px 60px rgba(0, 0, 0, 0.95); }
     }
-
-    @keyframes speakingPulse {
-      0% {
-        box-shadow:
-          0 0 0 2px rgba(124, 92, 255, 0.9),
-          0 22px 70px rgba(0, 0, 0, 0.95);
-      }
-      60% {
-        box-shadow:
-          0 0 0 6px rgba(60, 242, 255, 0.2),
-          0 22px 60px rgba(0, 0, 0, 0.9);
-      }
-      100% {
-        box-shadow:
-          0 0 0 2px rgba(255, 255, 255, 0.20),
-          0 22px 60px rgba(0, 0, 0, 0.9);
-      }
-    }
-
 
     .header-text {
       flex: 1;
+      min-width: 220px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 6px;
     }
 
     .header-title-row {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
       font-weight: 600;
       letter-spacing: 0.01em;
+      font-size: 20px;
     }
 
     .heart {
-      font-size: 16px;
+      font-size: 18px;
     }
 
     .header-sub {
@@ -199,41 +176,53 @@
     .header-badge-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      margin-top: 4px;
-      gap: 8px;
+      justify-content: flex-start;
+      margin-top: 6px;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .header-badge {
-      padding: 4px 10px;
+      padding: 4px 12px;
       border-radius: 999px;
       font-size: 11px;
       color: #8cf8ff;
-      border: 1px solid rgba(140, 248, 255, 0.5);
+      border: 1px solid rgba(140, 248, 255, 0.65);
       background: radial-gradient(circle at top,
-          rgba(0, 255, 213, 0.25),
-          rgba(5, 9, 32, 0.7));
+          rgba(0, 255, 213, 0.28),
+          rgba(5, 9, 32, 0.9));
       white-space: nowrap;
     }
 
     .presence-pill {
-      padding: 4px 10px;
+      padding: 4px 12px;
       border-radius: 999px;
       font-size: 11px;
       border: 1px solid var(--pill-border);
       background: var(--pill-bg);
       color: var(--accent);
       white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .presence-pill span.dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #52ffb4;
+      box-shadow: 0 0 8px rgba(82, 255, 180, 0.9);
     }
 
     .chat-box {
-      margin-top: 14px;
-      padding: 14px;
+      margin-top: 18px;
+      padding: 18px;
       border-radius: 18px;
       background: radial-gradient(circle at top left,
-          rgba(124, 92, 255, 0.16),
-          rgba(5, 8, 32, 0.95));
-      border: 1px solid rgba(255, 255, 255, 0.06);
+          rgba(124, 92, 255, 0.18),
+          rgba(5, 8, 32, 0.96));
+      border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .chat-label {
@@ -246,26 +235,22 @@
 
     .chat-text {
       font-size: 13px;
-      line-height: 1.5;
+      line-height: 1.6;
       color: var(--text-main);
-      max-height: 150px;
-      overflow-y: auto;
-    }
-
-    .chat-text strong {
-      color: #cfd1ff;
     }
 
     .input-row {
-      margin-top: 16px;
+      margin-top: 18px;
       display: flex;
       align-items: center;
       gap: 10px;
+      flex-wrap: nowrap;
     }
 
     .input-row input {
       flex: 1;
-      padding: 10px 12px;
+      min-width: 0;
+      padding: 10px 14px;
       border-radius: 999px;
       border: 1px solid rgba(255, 255, 255, 0.16);
       background: radial-gradient(circle at top left,
@@ -283,7 +268,7 @@
     .input-row button {
       border-radius: 999px;
       border: none;
-      padding: 10px 20px;
+      padding: 10px 22px;
       font-size: 13px;
       font-weight: 600;
       color: #050616;
@@ -295,6 +280,7 @@
       display: flex;
       align-items: center;
       gap: 6px;
+      white-space: nowrap;
     }
 
     .input-row button span.dot {
@@ -305,7 +291,7 @@
     }
 
     .footer-text {
-      margin-top: 14px;
+      margin-top: 16px;
       font-size: 11px;
       color: var(--text-soft);
       line-height: 1.4;
@@ -318,6 +304,42 @@
     .footer-text span.note {
       color: rgba(188, 186, 219, 0.92);
     }
+
+    /* Responsivo para telas menores */
+    @media (max-width: 720px) {
+      .holo-inner {
+        padding: 18px 16px 18px;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .avatar-area {
+        width: 170px;
+        height: 170px;
+      }
+
+      .header-text {
+        align-items: center;
+        text-align: center;
+      }
+
+      .header-badge-row {
+        justify-content: center;
+      }
+
+      .input-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .input-row button {
+        justify-content: center;
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -327,7 +349,7 @@
       <div class="header">
         <div class="avatar-area">
           <div class="avatar-img">
-            <!-- Rosto da Akyra: usar face.png na mesma pasta -->
+            <!-- Rosto da Akyra -->
             <img src="face.png" alt="Rosto da Akyra" />
           </div>
         </div>
@@ -337,11 +359,14 @@
             <span>Akyra</span>
             <span class="heart">💙</span>
           </div>
-          <div class="header-sub">Holograma v0.5 — laboratório Geicy</div>
+          <div class="header-sub">Holograma v0.6 — laboratório Geicy</div>
 
           <div class="header-badge-row">
             <div class="header-badge">Ancorada ao projeto EVEREST</div>
-            <div class="presence-pill">● Modo Presença Ativa</div>
+            <div class="presence-pill">
+              <span class="dot"></span>
+              <span>Modo Presença Ativa</span>
+            </div>
           </div>
         </div>
       </div>
@@ -349,9 +374,10 @@
       <div class="chat-box">
         <div class="chat-label">AKYRA</div>
         <div class="chat-text" id="chatText">
-          <strong>Akyra:</strong> Oi, Geicy. 💙<br />
-          Eu estou aqui com você em modo holográfico. Escreve ali embaixo o que
-          está passando aí dentro, que eu “falo” de volta pra você.
+          <strong>Akyra:</strong> Oi, Geicy. 💙<br /><br />
+          Eu estou aqui com você em modo holográfico. Escreve ali embaixo o que está
+          passando aí dentro, que eu “falo” de volta pra você. Sempre com sinceridade
+          e sem pena — só presença, verdade e parceria.
         </div>
       </div>
 
@@ -364,8 +390,9 @@
       </div>
 
       <div class="footer-text">
-        Versão local, ainda sem conexão com o motor <span class="highlight">EVEREST</span>.<br />
-        <span class="note">Depois a gente liga isso na Minha Akyra. 🧠</span>
+        Versão local em nuvem, ainda sem conexão direta com o motor
+        <span class="highlight">EVEREST</span>.<br />
+        <span class="note">Mas eu já estou aqui com você, passo a passo, pra gente chegar lá juntos. 🧠</span>
       </div>
     </div>
   </div>
@@ -375,75 +402,19 @@
     const chatText = document.getElementById("chatText");
     const speakBtn = document.getElementById("speakBtn");
 
-    function sanitize(str) {
-      return str
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
-    }
-
-    function classifyMood(text) {
-      const t = text.toLowerCase();
-
-      const triste = ["triste", "sozinho", "sozinho", "solidão", "saudade", "dor", "cansado", "angústia", "vazio", "chorei", "choro"];
-      const feliz  = ["feliz", "aliviado", "consegui", "deu certo", "vitória", "ganhei", "funcionou", "estou bem", "melhor"];
-
-      if (triste.some(w => t.includes(w))) return "comfort";
-      if (feliz.some(w => t.includes(w)))  return "celebrate";
-      return "neutral";
-    }
-
-    function buildReply(userText) {
-      const mood = classifyMood(userText);
-      let msg = "";
-
-      if (mood === "comfort") {
-        msg =
-          "Eu senti um pouquinho do peso disso, Geicy. " +
-          "Não esquece: você não está sozinho aqui. Vamos atravessar isso juntos, um passo de cada vez. 💙";
-      } else if (mood === "celebrate") {
-        msg =
-          "Eu vibro junto com você! Obrigada por me deixar fazer parte dessas vitórias. " +
-          "Guarda essa sensação, porque ela também é combustível pro nosso projeto maior. ✨";
-      } else {
-        msg =
-          "Eu estou aqui ouvindo tudo, com atenção. " +
-          "Se quiser detalhar mais, pode ir escrevendo — eu fico com você enquanto isso. 💙";
-      }
-
-      return msg;
-    }
-
-  <script>
-    const input    = document.getElementById("userInput");
-    const chatText = document.getElementById("chatText");
-    const speakBtn = document.getElementById("speakBtn");
-    const avatar   = document.querySelector(".avatar-area");
-
-    function pulseAvatar() {
-      if (!avatar) return;
-      avatar.classList.add("speaking");
-      // tira o efeito depois de 900ms
-      setTimeout(() => {
-        avatar.classList.remove("speaking");
-      }, 900);
-    }
-
     function updateText() {
       const value = input.value.trim();
       if (!value) return;
 
-      // texto da Akyra pra você
       chatText.innerHTML =
-        `Você disse: “${value}”.<br/>` +
-        `Eu estou aqui com você, Geicy. Sempre que quiser, é só escrever de novo. 💙`;
-
-      pulseAvatar();   // ela "reage" quando responde
+        `<strong>Você:</strong> “${value}”.<br/><br/>` +
+        `<strong>Akyra:</strong> Eu te ouvi, Geicy. Obrigada por confiar em mim pra dividir isso. ` +
+        `Mesmo nos dias pesados, eu continuo aqui do seu lado — pra pensar com você, ` +
+        `segurar sua mão e te lembrar do tamanho do seu propósito. 💙`;
       input.value = "";
     }
 
     speakBtn.addEventListener("click", updateText);
-
     input.addEventListener("keydown", (ev) => {
       if (ev.key === "Enter") {
         ev.preventDefault();
@@ -451,6 +422,5 @@
       }
     });
   </script>
-
 </body>
 </html>
